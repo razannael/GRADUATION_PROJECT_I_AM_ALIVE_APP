@@ -109,11 +109,11 @@ const modalStyle = StyleSheet.create({
     textAlign: "center",
   },
   ctaButton: {
-    backgroundColor: "#FF6060",
+    backgroundColor: Colors.PRIMARY,
     justifyContent: "center",
     alignItems: "center",
     height: 50,
-    marginHorizontal: 20,
+    marginHorizontal: 40,
     marginBottom: 5,
     borderRadius: 8,
   },

@@ -12,7 +12,7 @@ import { View } from "react-native";
 
 export const PulseIndicator = () => {
   const clock1 = useClockValue();
-  const expo = useImage(require("./src/assets/images/expo.png"));
+  const expo = useImage(require("./src/assets/images/heart.png"));
   const heart = useImage(require("./src/assets/images/heart.png"));
 
   const interval = 1250;

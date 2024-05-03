@@ -95,7 +95,7 @@ function useBLE(): BluetoothLowEnergyApi {
       if (error) {
         console.log(error);
       }
-      if (device && device.name?.includes("CorSense")) {
+      if (device && device.name?.includes("")) {
         setAllDevices((prevState: Device[]) => {
           if (!isDuplicteDevice(prevState, device)) {
             return [...prevState, device];
@@ -146,8 +146,8 @@ function useBLE(): BluetoothLowEnergyApi {
       innerHeartRate = rawData[1].charCodeAt(0);
     } else {
       innerHeartRate =
-        Number(rawData[1].charCodeAt(0) << 8) +
-        Number(rawData[2].charCodeAt(2));
+        (rawData[1].charCodeAt(0) << 8) +
+        rawData[2].charCodeAt(0); // Corrected this line
     }
 
     setHeartRate(innerHeartRate);
@@ -155,15 +155,20 @@ function useBLE(): BluetoothLowEnergyApi {
 
   const startStreamingData = async (device: Device) => {
     if (device) {
-      device.monitorCharacteristicForService(
-        HEART_RATE_UUID,
-        HEART_RATE_CHARACTERISTIC,
-        onHeartRateUpdate
-      );
+      try {
+        await device.monitorCharacteristicForService(
+          HEART_RATE_UUID,
+          HEART_RATE_CHARACTERISTIC,
+          onHeartRateUpdate
+        );
+      } catch (error) {
+        console.log("Error monitoring characteristic:", error);
+      }
     } else {
       console.log("No Device Connected");
     }
   };
+  
 
   return {
     scanForPeripherals,
