@@ -22,20 +22,33 @@ const SignIn = (props) => {
   };
 
 
-    const handleContinue = () => {
-      // Check if any email address is entered
-      const hasEmail = contacts.some(email => email.trim() !== '');
+  const handleContinue = () => {
+    // Check if any email address is entered
+    const hasEmail = contacts.some(email => email.trim() !== '');
   
-      if (hasEmail) {
-        props.navigation.navigate("Message") // Navigate to the message composition screen
-      } else {
-        props.navigation.navigate('Main'); // Navigate to the main screen
-      }
-    // Handle what to do when the user clicks continue (e.g., validation, navigation)
-    // For simplicity, let's just log the contacts for now
-
-    console.log('Emergency Contacts:', contacts);
+    if (hasEmail) {
+      axios.post('https://graduation-project1-fapf.onrender.com/victim/setEmergencyContacts', {
+        contactsEmail: contacts.filter(email => email.trim() !== '')
+      }, {
+        headers: {
+          Authorization: 'IAMALIVE__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzkyNDMxYjEzMTJmOTljMDI4ZTY2YyIsInJvbGUiOiJWaWN0aW0iLCJpYXQiOjE3MTUwMjQxMDIsImV4cCI6MTcxNzYxNjEwMn0.b8DVM2t8hdBpLleWt-v77uAOlV8vE7B5ymWOrdl3Ayk'
+        }
+      })
+      .then(response => {
+        // Handle response from the backend
+        console.log('Response:', response.data);
+        props.navigation.navigate("Message"); // Navigate to the message composition screen
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error:', error);
+        // You can show an error message here
+      });
+    } else {
+      props.navigation.navigate('Main'); // Navigate to the main screen
+    }
   };
+  
 
    
 

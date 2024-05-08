@@ -25,7 +25,7 @@ const Signup = props => {
   const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const [isVictim, setIsVictim] = useState(true);
   // State to store validation messages
   const [validationMessage, setValidationMessage] = useState('');
  // Function to validate fields
@@ -56,11 +56,12 @@ const Signup = props => {
     if (validateFields()) {
       try {
         // Replace 'YOUR_SIGNUP_API_ENDPOINT' with your actual API endpoint
-        const response = await axios.post('YOUR_SIGNUP_API_ENDPOINT', {
-          username: username,
+        const response = await axios.post('https://graduation-project1-fapf.onrender.com/auth/signup', {
+          name: username,
           email: email,
           city: city,
           password: password,
+          isVictim: isVictim
         });
 
         // Check if signup was successful based on the response
@@ -71,7 +72,8 @@ const Signup = props => {
           props.navigation.navigate('SignIn');
         } else {
           // Signup failed
-          Alert.alert('Signup Failed', response.data.message);
+          Alert.alert('Signup Success', response.data.message);
+          console.log(response.data.message);
         }
       } catch (error) {
         // Handle network error, parsing error, etc.
@@ -110,13 +112,30 @@ const Signup = props => {
           <Field placeholder="Username" value={username}
         onChangeText={setUsername} // Update state when text changes
           />
-          <Field
-            placeholder="Email"
-            keyboardType={'email-address'}
-          />
-          <Field placeholder="City" />
-          <Field placeholder="Password" secureTextEntry={true} />
-          <Field placeholder="Confirm Password" secureTextEntry={true} />
+<Field 
+  placeholder="Email" 
+  value={email} 
+  onChangeText={setEmail} 
+  keyboardType={'email-address'} 
+/>
+<Field 
+  placeholder="City" 
+  value={city} 
+  onChangeText={setCity} 
+/>
+<Field 
+  placeholder="Password" 
+  value={password} 
+  onChangeText={setPassword} 
+  secureTextEntry={true} 
+/>
+<Field 
+  placeholder="Confirm Password" 
+  value={confirmPassword} 
+  onChangeText={setConfirmPassword} 
+  secureTextEntry={true} 
+/>
+
      <View style={{marginTop: 6, marginBottom: 7}}>
      <View
             style={{
@@ -153,7 +172,7 @@ const Signup = props => {
           <MyButton
             title="Sign up"
             onPress={() => {
-              props.navigation.navigate('SignIn');
+              handleSignupPress();
             }}
           />
           {/* Display validation message */}

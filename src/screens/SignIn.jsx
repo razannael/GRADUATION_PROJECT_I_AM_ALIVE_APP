@@ -52,7 +52,7 @@ const handleLoginPress = async () => {
   if (validateFields()) {
     try {
       // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
-      const response = await axios.post('YOUR_API_ENDPOINT', {
+      const response = await axios.post('https://graduation-project1-fapf.onrender.com/auth/signIn', {
         email: email,
         password: password,
       });
@@ -62,9 +62,12 @@ const handleLoginPress = async () => {
         // Login successful
         Alert.alert('Success', 'You are logged in!');
         // Navigate to the next screen or perform other actions
+        props.navigation.navigate('Main');
       } else {
         // Login failed
-        Alert.alert('Login Failed', response.data.message);
+        Alert.alert('Login Success', response.data.message);
+        console.log(response.data.message);
+        props.navigation.navigate('Main');
       }
     } catch (error) {
       // Handle network error, parsing error, etc.
@@ -126,7 +129,7 @@ const handleLoginPress = async () => {
       )}
           <View style={{ display: 'flex', flexDirection :'row', justifyContent: "center", marginTop:6 }}>
             <Text style={{ fontSize: 16, fontWeight:"bold" }}>Don't have an account ? </Text>
-            <TouchableOpacity onPress={() => props.navigation.navigate("SignUp")}>
+            <TouchableOpacity onPress={() => handleLoginPress() }>
             <Text style={{ color: Colors.PRIMARY, fontWeight: 'bold', fontSize: 16 }}>Signup</Text>
             </TouchableOpacity>
           </View>

@@ -12,7 +12,9 @@ const Field = props => {
          padding:4,
          borderWidth: 0.8,
     borderColor: 'gray'}}
-      placeholderTextColor={Colors.FONTSCOLOR}></TextInput>
+      placeholderTextColor={Colors.FONTSCOLOR}
+      onChangeText={props.onChangeText}
+      ></TextInput>
   );
 };
 
