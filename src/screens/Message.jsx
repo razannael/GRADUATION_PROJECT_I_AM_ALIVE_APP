@@ -4,6 +4,7 @@ import Colors from '../utils/Colors.js'
 import { GestureHandlerRootView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import Field from '../components/Field.jsx';
 import MyButton from '../components/MyButton.jsx';
+import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 
 const screenHeight = Dimensions.get('window').height;
@@ -14,15 +15,29 @@ const SignIn = (props) => {
   const handleMessageChange = (text) => {
     setMessage(text);
   };
-  const handleSendMessage = () => {
-    // Here you can implement the logic to send the message
-    console.log('Sending message:', message);
-    // After sending the message, you can navigate to any other screen as needed
-    // For example, navigate back to the main screen
-    props.navigation.navigate("Main")
+  const handleSendMessage = async () => {
+    const token = await SecureStore.getItemAsync('secure_token');
+  
+    if (token) {
+      try {
+        const response = await axios.post('https://graduation-project1-fapf.onrender.com/victim/setEmergencyMessage', {
+          message: message
+        }, {
+          headers: {
+            Authorization: `IAMALIVE__${token}`
+          }
+        });
+  
+        console.log('Response:', response.data);
+        props.navigation.navigate("Main");
+        Alert.alert("Success", "Message saved successfully");
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      console.error('No token found');
+    }
   };
-
-   
 
   return (
     <GestureHandlerRootView>

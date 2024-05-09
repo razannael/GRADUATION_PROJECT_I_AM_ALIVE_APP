@@ -42,7 +42,8 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow I am Alive App to use your location."
         }
-      ]
+      ],
+      "expo-secure-store"
     ]
   }
 }

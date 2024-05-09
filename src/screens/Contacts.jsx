@@ -5,6 +5,8 @@ import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-h
 import Field from '../components/Field.jsx';
 import MyButton from '../components/MyButton.jsx';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -18,34 +20,43 @@ const SignIn = (props) => {
   };
 
   const handleAddContact = () => {
-    setContacts([...contacts, '']); // Add an empty email field
+    setContacts([...contacts, '']); 
   };
 
-
-  const handleContinue = () => {
-    // Check if any email address is entered
+  const handleContinue = async () => {
     const hasEmail = contacts.some(email => email.trim() !== '');
-  
     if (hasEmail) {
-      axios.post('https://graduation-project1-fapf.onrender.com/victim/setEmergencyContacts', {
-        contactsEmail: contacts.filter(email => email.trim() !== '')
-      }, {
-        headers: {
-          Authorization: 'IAMALIVE__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzkyNDMxYjEzMTJmOTljMDI4ZTY2YyIsInJvbGUiOiJWaWN0aW0iLCJpYXQiOjE3MTUwMjQxMDIsImV4cCI6MTcxNzYxNjEwMn0.b8DVM2t8hdBpLleWt-v77uAOlV8vE7B5ymWOrdl3Ayk'
+      try {
+        const token = await SecureStore.getItemAsync('secure_token');
+        console.log('Retrieved token:', token); // Add this line to check
+
+        if (token) {
+          const response = await axios.post('https://graduation-project1-fapf.onrender.com/victim/setEmergencyContacts', {
+            contactsEmail: contacts.filter(email => email.trim() !== '')
+          }, {
+            headers: {
+              Authorization: `IAMALIVE__${token}`
+            }
+          });
+            console.log('Response:', response.data);
+          props.navigation.navigate("Message");
+        } else {
+          console.error('No token found');
         }
-      })
-      .then(response => {
-        // Handle response from the backend
-        console.log('Response:', response.data);
-        props.navigation.navigate("Message"); // Navigate to the message composition screen
-      })
-      .catch(error => {
-        // Handle error
-        console.error('Error:', error);
-        // You can show an error message here
-      });
+      } catch (error) {
+        if (error.response) {
+          console.error('Error data:', error.response.data);
+          console.error('Error status:', error.response.status);
+          console.error('Error headers:', error.response.headers);
+        } else if (error.request) {
+          console.error('Error request:', error.request);
+        } else {
+          console.error('Error message:', error.message);
+        }
+        console.error('Error config:', error.config);
+      }
     } else {
-      props.navigation.navigate('Main'); // Navigate to the main screen
+      props.navigation.navigate('Main');
     }
   };
   

@@ -6,6 +6,8 @@ import Field from '../components/Field.jsx';
 import MyButton from '../components/MyButton.jsx';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
+import * as SecureStore from 'expo-secure-store';
+
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -37,7 +39,6 @@ const SignIn = (props) => {
         setValidationMessage('Please enter a valid email address.');
         return false;
       }
-      // Example: Check for password length
       if (password.length < 6) {
         setValidationMessage('Password must be at least 6 characters long.');
         return false;
@@ -47,30 +48,25 @@ const SignIn = (props) => {
       return true;
     };
   
-  // Function to handle login button press
+// Function to handle login button press
 const handleLoginPress = async () => {
   if (validateFields()) {
     try {
-      // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
+      
       const response = await axios.post('https://graduation-project1-fapf.onrender.com/auth/signIn', {
         email: email,
         password: password,
       });
-
-      // Check if login was successful based on the response
+      await SecureStore.setItemAsync('secure_token', response.data.token);
+      console.log('Token stored:', response.data.token);
       if (response.data.success) {
-        // Login successful
         Alert.alert('Success', 'You are logged in!');
-        // Navigate to the next screen or perform other actions
-        props.navigation.navigate('Main');
+        props.navigation.navigate('Contacts');
       } else {
-        // Login failed
-        Alert.alert('Login Success', response.data.message);
-        console.log(response.data.message);
-        props.navigation.navigate('Main');
+        Alert.alert(response.data.message);
+        props.navigation.navigate('Contacts');
       }
     } catch (error) {
-      // Handle network error, parsing error, etc.
       Alert.alert('Error', error.message);
     }
   }
@@ -120,7 +116,7 @@ const handleLoginPress = async () => {
               Forgot Password ?
             </Text>
           </View>
-          <MyButton title="Login" onPress={() => props.navigation.navigate("Contacts")} />
+          <MyButton title="Login" onPress={() => handleLoginPress()} />
           {/* Display validation message */}
       {!!validationMessage && (
         <Text style={{ color: 'red', marginBottom: 15 , marginTop:10 }}>
@@ -129,7 +125,7 @@ const handleLoginPress = async () => {
       )}
           <View style={{ display: 'flex', flexDirection :'row', justifyContent: "center", marginTop:6 }}>
             <Text style={{ fontSize: 16, fontWeight:"bold" }}>Don't have an account ? </Text>
-            <TouchableOpacity onPress={() => handleLoginPress() }>
+            <TouchableOpacity onPress={() => props.navigation.navigate('SignUp')}>
             <Text style={{ color: Colors.PRIMARY, fontWeight: 'bold', fontSize: 16 }}>Signup</Text>
             </TouchableOpacity>
           </View>
