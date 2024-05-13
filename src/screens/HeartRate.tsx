@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,6 +10,9 @@ import DeviceModal from "../../DeviceConnectionModal";
 import { PulseIndicator } from "../../PulseIndicator";
 import useBLE from "../../useBLE";
 import Colors from "../utils/Colors";
+import { UserLocationContext } from "../contexts/UserLocationContext";
+import * as SecureStore from 'expo-secure-store';
+import axios from "axios";
 
 
 const HeartRate = () => {
@@ -23,6 +26,44 @@ const HeartRate = () => {
     disconnectFromDevice,
   } = useBLE();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+
+  const context = useContext(UserLocationContext);
+
+  if (context === null) {
+    throw new Error('UserLocationContext is null');
+  }
+
+  const { location } = context;
+  const handleheartRateLocation = async () => {
+    const token = await SecureStore.getItemAsync('secure_token');
+  
+    if (token) {
+      try {
+        const response = await axios.post('https://graduation-project1-fapf.onrender.com/victim/setHeartAndLocation',
+          {
+            heartRate: heartRate,
+            location: {
+                latitude: location?.latitude,
+                longitude : location?.longitude
+            }
+        }
+        , {
+          headers: {
+            Authorization: `IAMALIVE__${token}`
+          }
+        });
+  
+        console.log('Response:', response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      console.error('No token found');
+    }
+  };
+
+
 
   const scanForDevices = async () => {
     const isPermissionsEnabled = await requestPermissions();
@@ -45,7 +86,9 @@ const HeartRate = () => {
       <View style={styles.heartRateTitleWrapper}>
         {connectedDevice ? (
           <>
-            <PulseIndicator />
+            <TouchableOpacity onPress={handleheartRateLocation} activeOpacity={1}>
+               <PulseIndicator />
+            </TouchableOpacity>
             <Text style={styles.heartRateTitleText}>Your Heart Rate Is:</Text>
             <Text style={styles.heartRateText}>{heartRate} bpm</Text>
           </>

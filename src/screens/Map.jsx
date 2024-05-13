@@ -3,7 +3,8 @@ import React, { useContext } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import { UserLocationContext } from '../contexts/UserLocationContext.tsx'
 
-const Map = () => {  const { location } = useContext(UserLocationContext);
+const Map = () => {  
+const { location } = useContext(UserLocationContext);
 
 if (!location) {
   return <Text>No location data available</Text>; // Fallback UI
