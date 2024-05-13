@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, StyleSheet, Text, Image, Button, ToastAndroid } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Image, Button, ToastAndroid, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import Colors from '../utils/Colors.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,6 +7,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { Audio } from 'expo-av';
+import * as SecureStore from 'expo-secure-store';
+import axios from 'axios';
+
 
 const SOS = () => {
   const [sound, setSound] = useState();  
@@ -44,14 +47,32 @@ const SOS = () => {
     }
   }
   
-
+  const handleSOS = async () => {
+    const token = await SecureStore.getItemAsync('secure_token');
+  
+    if (token) {
+      try {
+        const response = await axios.post('https://graduation-project1-fapf.onrender.com/victim/sendSOSMessage', {}, {
+          headers: {
+            Authorization: `IAMALIVE__${token}`
+          }
+        });
+        console.log('Response:', response.data);
+        Alert.alert(response.data.message);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      console.error('No token found');
+    }
+  };
 
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.SosText}>Press on the SOS button to Send Email to Your Emergency contacts</Text>
       <TouchableOpacity style={styles.sosButton}>
-      <MaterialIcons name="sos" size={58} color="#FF9801" />
+      <MaterialIcons name="sos" size={58} color="#FF9801" onPress={handleSOS} />
       </TouchableOpacity>
       <View style={{display:'flex', flexDirection:'row', gap:90 , marginTop:50}}>
       <TouchableOpacity onPress={playSound}>

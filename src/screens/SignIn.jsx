@@ -59,12 +59,21 @@ const handleLoginPress = async () => {
       });
       await SecureStore.setItemAsync('secure_token', response.data.token);
       console.log('Token stored:', response.data.token);
+      console.log('Response:', response.data);
       if (response.data.success) {
         Alert.alert('Success', 'You are logged in!');
-        props.navigation.navigate('Contacts');
+        if(response.data.message === ""){
+           props.navigation.navigate('Contacts');
+        }else{
+          props.navigation.navigate('Main');
+        }
       } else {
         Alert.alert(response.data.message);
-        props.navigation.navigate('Contacts');
+        if(response.data.message === ""){
+          props.navigation.navigate('Contacts');
+       }else{
+         props.navigation.navigate('Main');
+       }
       }
     } catch (error) {
       Alert.alert('Error', error.message);
