@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -35,15 +35,8 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    
     "plugins": [
-      [
-        "react-native-ble-plx",
-        {
-          "isBackgroundEnabled": true,
-          "bluetoothAlwaysPermission": "This app uses Bluetooth to connect to external devices even when running in the background.",
-          "bluetoothPeripheralUsageDescription": "This app uses Bluetooth to connect to external devices."
-        }
-      ],
       "expo-font",
       [
         "expo-location",

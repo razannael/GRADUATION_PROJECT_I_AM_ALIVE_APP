@@ -114,7 +114,7 @@ export default function App() {
     text = JSON.stringify(location);
   }
 
-  
+
   return (
     <UserLocationContext.Provider
     value={{ location, setLocation}}>
@@ -131,6 +131,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
       </UserLocationContext.Provider>
+
 
   );
 }
