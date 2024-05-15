@@ -1,150 +1,200 @@
-import { View, Text, StyleSheet, Dimensions, Image, Alert } from 'react-native'
-import React, { useState } from 'react'
-import Colors from '../utils/Colors.js'
-import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
-import Field from '../components/Field.jsx';
-import MyButton from '../components/MyButton.jsx';
-import axios from 'axios';
-import { useFonts } from 'expo-font';
-import * as SecureStore from 'expo-secure-store';
+import { View, Text, StyleSheet, Dimensions, Image, Alert } from "react-native";
+import React, { useState } from "react";
+import Colors from "../utils/Colors.js";
+import {
+  GestureHandlerRootView,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
+import Field from "../components/Field.jsx";
+import MyButton from "../components/MyButton.jsx";
+import axios from "axios";
+import { useFonts } from "expo-font";
+import * as SecureStore from "expo-secure-store";
 
-
-const screenHeight = Dimensions.get('window').height;
+const screenHeight = Dimensions.get("window").height;
 
 const SignIn = (props) => {
+  const [loaded] = useFonts({
+    KaushanScriptRegular: require("../assets/fonts/KaushanScriptRegular.ttf"),
+  });
 
-    const [loaded] = useFonts({
-        KaushanScriptRegular: require('../assets/fonts/KaushanScriptRegular.ttf'),
-      })
-     
-      if(!loaded){
-       return null;
-      }
-    // State to store input field values
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-      // State to store validation messages
-  const [validationMessage, setValidationMessage] = useState('');
-
-    // Function to validate email and password
-    const validateFields = () => {
-      if (!email || !password) {
-        setValidationMessage('Please fill in all fields.');
-        return false;
-      }
-      // Add more validation checks as needed
-      // Example: Check for valid email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        setValidationMessage('Please enter a valid email address.');
-        return false;
-      }
-      if (password.length < 6) {
-        setValidationMessage('Password must be at least 6 characters long.');
-        return false;
-      }
-      // If all validations pass
-      setValidationMessage('');
-      return true;
-    };
-  
-// Function to handle login button press
-const handleLoginPress = async () => {
-  if (validateFields()) {
-    try {
-      
-      const response = await axios.post('https://graduation-project1-fapf.onrender.com/auth/signIn', {
-        email: email,
-        password: password,
-      });
-      await SecureStore.setItemAsync('secure_token', response.data.token);
-      console.log('Token stored:', response.data.token);
-      console.log('Response:', response.data);
-      if (response.data.success) {
-        Alert.alert('Success', 'You are logged in!');
-        if(response.data.message === ""){
-           props.navigation.navigate('Contacts');
-        }else{
-          props.navigation.navigate('Main');
-        }
-      } else {
-        Alert.alert(response.data.message);
-        if(response.data.message === ""){
-          props.navigation.navigate('Contacts');
-       }else{
-         props.navigation.navigate('Main');
-       }
-      }
-    } catch (error) {
-      Alert.alert('Error', error.message);
-    }
+  if (!loaded) {
+    return null;
   }
-};
+  // State to store input field values
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // State to store validation messages
+  const [validationMessage, setValidationMessage] = useState("");
+
+  // Function to validate email and password
+  const validateFields = () => {
+    if (!email || !password) {
+      setValidationMessage("Please fill in all fields.");
+      return false;
+    }
+    // Add more validation checks as needed
+    // Example: Check for valid email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setValidationMessage("Please enter a valid email address.");
+      return false;
+    }
+    if (password.length < 6) {
+      setValidationMessage("Password must be at least 6 characters long.");
+      return false;
+    }
+    // If all validations pass
+    setValidationMessage("");
+    return true;
+  };
+
+  // Function to handle login button press
+  const handleLoginPress = async () => {
+    if (validateFields()) {
+      try {
+        const response = await axios.post(
+          "https://graduation-project1-fapf.onrender.com/auth/signIn",
+          {
+            email: email,
+            password: password,
+          }
+        );
+        await SecureStore.setItemAsync("secure_token", response.data.token);
+        console.log("Token stored:", response.data.token);
+        console.log("Response:", response.data);
+        if (response.data.success) {
+          Alert.alert("Success", "You are logged in!");
+          if (response.data.message === "") {
+            props.navigation.navigate("Contacts");
+          } else {
+            props.navigation.navigate("Main");
+          }
+        } else {
+          Alert.alert(response.data.message);
+          if (response.data.message === "") {
+            props.navigation.navigate("Contacts");
+          } else {
+            props.navigation.navigate("Main");
+          }
+        }
+      } catch (error) {
+        Alert.alert("Error", error.message);
+      }
+    }
+  };
 
   return (
     <GestureHandlerRootView>
-    <View style={styles.fullHeightView}>
-            <View style={{alignItems: 'center', width: 380}}>
-              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:25 , paddingVertical:22 , gap:120}}>
-              <Image source={require('../assets/images/logo.png')}  style={styles.image} />
-               <Text style={styles.generalText}>I Am Alive</Text>
-              </View>
-        <View
-          style={{
-            backgroundColor: 'white',
-            height: 700,
-            width: 410,
-            borderTopLeftRadius: 140,
-            paddingTop: 60,
-            alignItems: 'center',
-          }}>
-          <Text style={styles.welcomeText}>
-            Welcome Back
-          </Text>
-          <Text
-            style={{
-              color: 'grey',
-              fontSize: 19,
-              fontWeight: 'bold',
-              marginBottom: 20,
-            }}>
-            Login to your account
-          </Text>
-          <Field
-            placeholder="Email"
-            keyboardType={'email-address'}
-            value={email}
-            onChangeText={setEmail} // Update state when text changes
-          />
-          <Field placeholder="Password" secureTextEntry={true}  value={password}
-        onChangeText={setPassword} // Update state when text changes
-           />
+      <View style={styles.fullHeightView}>
+        <View style={{ alignItems: "center", width: 380 }}>
           <View
-            style={{alignItems: 'flex-end', width: '70%', paddingRight: 10, marginBottom: 170}}>
-            <Text style={{color: Colors.PRIMARY, fontWeight: 'bold', fontSize: 13}}>
-              Forgot Password ?
-            </Text>
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              marginTop: 25,
+              paddingVertical: 22,
+              gap: 120,
+            }}
+          >
+            <Image
+              source={require("../assets/images/logo.png")}
+              style={styles.image}
+            />
+            <Text style={styles.generalText}>I Am Alive</Text>
           </View>
-          <MyButton title="Login" onPress={() => handleLoginPress()} />
-          {/* Display validation message */}
-      {!!validationMessage && (
-        <Text style={{ color: 'red', marginBottom: 15 , marginTop:10 }}>
-          {validationMessage}
-        </Text>
-      )}
-          <View style={{ display: 'flex', flexDirection :'row', justifyContent: "center", marginTop:6 }}>
-            <Text style={{ fontSize: 16, fontWeight:"bold" }}>Don't have an account ? </Text>
-            <TouchableOpacity onPress={() => props.navigation.navigate('SignUp')}>
-            <Text style={{ color: Colors.PRIMARY, fontWeight: 'bold', fontSize: 16 }}>Signup</Text>
-            </TouchableOpacity>
+          <View
+            style={{
+              backgroundColor: "white",
+              height: 700,
+              width: 410,
+              borderTopLeftRadius: 140,
+              paddingTop: 60,
+              alignItems: "center",
+            }}
+          >
+            <Text style={styles.welcomeText}>Welcome Back</Text>
+            <Text
+              style={{
+                color: "grey",
+                fontSize: 19,
+                fontWeight: "bold",
+                marginBottom: 20,
+              }}
+            >
+              Login to your account
+            </Text>
+            <Field
+              placeholder="Email"
+              keyboardType={"email-address"}
+              value={email}
+              onChangeText={setEmail} // Update state when text changes
+            />
+            <Field
+              placeholder="Password"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={setPassword} // Update state when text changes
+            />
+            <View
+              style={{
+                alignItems: "flex-end",
+                width: "70%",
+                paddingRight: 10,
+                marginBottom: 170,
+              }}
+            >
+              <TouchableOpacity onPress={() => props.navigation.navigate("SendCode")}>
+                <Text
+                  style={{
+                    color: Colors.PRIMARY,
+                    fontWeight: "bold",
+                    fontSize: 13,
+                  }}
+                >
+                  Forgot Password ?
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <MyButton title="Login" onPress={() => handleLoginPress()} />
+            {/* Display validation message */}
+            {!!validationMessage && (
+              <Text style={{ color: "red", marginBottom: 15, marginTop: 10 }}>
+                {validationMessage}
+              </Text>
+            )}
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 6,
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Don't have an account ?{" "}
+              </Text>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("SignUp")}
+              >
+                <Text
+                  style={{
+                    color: Colors.PRIMARY,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                  }}
+                >
+                  Signup
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-    </View>
-</GestureHandlerRootView>
-
-  )
-}
+    </GestureHandlerRootView>
+  );
+};
 // Styles
 const styles = StyleSheet.create({
   fullHeightView: {
@@ -152,22 +202,20 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.PRIMARY,
   },
   image: {
-    width: 60, 
-    height: 60, 
+    width: 60,
+    height: 60,
   },
-  generalText:{
+  generalText: {
     color: Colors.FONTSCOLOR,
-    fontFamily: 'KaushanScriptRegular',
-    fontSize:22,
-    marginTop:13,
-
-},
-welcomeText:{
-  color: Colors.FONTSCOLOR,
-  fontWeight:'bold',
-  fontSize:30,
-marginBottom:20
-
-}
+    fontFamily: "KaushanScriptRegular",
+    fontSize: 22,
+    marginTop: 13,
+  },
+  welcomeText: {
+    color: Colors.FONTSCOLOR,
+    fontWeight: "bold",
+    fontSize: 30,
+    marginBottom: 20,
+  },
 });
-export default SignIn
+export default SignIn;

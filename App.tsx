@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet, Text, View } from 'react-native';
 import Home from './src/screens/Home';
 import SignIn from './src/screens/SignIn';
 import Signup from './src/screens/SignUp';
@@ -17,6 +17,10 @@ import Profile from './src/screens/Profile';
 import HeartRate from './src/screens/HeartRate';
 import * as Location from 'expo-location';
 import { UserLocationContext } from './src/contexts/UserLocationContext';
+import BleManager from 'react-native-ble-manager';
+import SendCode from './src/screens/SendCode';
+import ForgetPassword from './src/screens/ForgetPassword';
+
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -58,7 +62,38 @@ export default function App() {
     const [location, setLocation] = useState<LocationState | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+    
+
+    // useEffect(() => {
+    //   // turn on bluetooth if it is not on
+    //   BleManager.enableBluetooth().then(() => {
+    //     console.log('Bluetooth is turned on!');
+    //   });
+  
+    //     if (Platform.OS === 'android' && Platform.Version >= 23) {
+    //     PermissionsAndroid.check(
+    //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    //     ).then(result => {
+    //       if (result) {
+    //         console.log('Permission is OK');
+    //       } else {
+    //         PermissionsAndroid.request(
+    //           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    //         ).then(result => {
+    //           if (result) {
+    //             console.log('User accept');
+    //           } else {
+    //             console.log('User refuse');
+    //           }
+    //         });
+    //       }
+    //     });
+    //   }
+  
+    // }, []);
+
   useEffect(() => {
+
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -79,6 +114,7 @@ export default function App() {
     text = JSON.stringify(location);
   }
 
+  
   return (
     <UserLocationContext.Provider
     value={{ location, setLocation}}>
@@ -90,6 +126,8 @@ export default function App() {
           <Stack.Screen name="Contacts" component={Contacts} />
           <Stack.Screen name="Message" component={Message} />
           <Stack.Screen name="Main" component={MainDrawer} />
+          <Stack.Screen name="SendCode" component={SendCode} />
+          <Stack.Screen name="ForgotPassword" component={ForgetPassword} />
         </Stack.Navigator>
       </NavigationContainer>
       </UserLocationContext.Provider>

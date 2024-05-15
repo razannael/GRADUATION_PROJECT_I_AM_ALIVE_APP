@@ -24,6 +24,7 @@
       },
       "permissions": [
         "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_SCAN",
         "android.permission.BLUETOOTH_ADMIN",
         "android.permission.BLUETOOTH_CONNECT",
         "android.permission.ACCESS_COARSE_LOCATION",
@@ -35,7 +36,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "react-native-ble-plx",
+      [
+        "react-native-ble-plx",
+        {
+          "isBackgroundEnabled": true,
+          "bluetoothAlwaysPermission": "This app uses Bluetooth to connect to external devices even when running in the background.",
+          "bluetoothPeripheralUsageDescription": "This app uses Bluetooth to connect to external devices."
+        }
+      ],
       "expo-font",
       [
         "expo-location",
