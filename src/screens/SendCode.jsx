@@ -18,7 +18,7 @@ const SendCode = (props) => {
           email: email
         })
         Alert.alert('Code Sent! Check your email');
-        props.navigation.navigate('ForgotPassword');
+        props.navigation.navigate('ForgotPassword', { email: email });
       } catch (error) {
         console.log(error);
       }
