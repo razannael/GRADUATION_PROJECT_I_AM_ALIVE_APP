@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const screenHeight = Dimensions.get('window').height;
 
-const Message = (props) => {
+const AddMessage = (props) => {
   const [message, setMessage] = useState('');
 
   const handleMessageChange = (text) => {
@@ -39,6 +39,7 @@ const Message = (props) => {
     }
   };
 
+  
   return (
     <GestureHandlerRootView>
     <View style={styles.fullHeightView}>
@@ -115,4 +116,4 @@ marginBottom:25
 
 }
 });
-export default Message
+export default AddMessage

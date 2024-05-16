@@ -20,6 +20,8 @@ import { UserLocationContext } from './src/contexts/UserLocationContext';
 import BleManager from 'react-native-ble-manager';
 import SendCode from './src/screens/SendCode';
 import ForgetPassword from './src/screens/ForgetPassword';
+import AddContacts from './src/screens/AddContacts';
+import AddMessage from './src/screens/AddMessage';
 
 
 const Drawer = createDrawerNavigator();
@@ -46,6 +48,7 @@ const MainDrawer = () => {
       <Drawer.Screen name="Location" component={Map} />
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="Heart Rate" component={HeartRate} />
+      <Drawer.Screen name="Add Contacts" component={AddContacts} />
     </Drawer.Navigator>
   );
 };
@@ -128,6 +131,7 @@ export default function App() {
           <Stack.Screen name="Main" component={MainDrawer} />
           <Stack.Screen name="SendCode" component={SendCode} />
           <Stack.Screen name="ForgotPassword" component={ForgetPassword} />
+          <Stack.Screen name="AddMessage" component={AddMessage} />
         </Stack.Navigator>
       </NavigationContainer>
       </UserLocationContext.Provider>

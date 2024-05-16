@@ -10,7 +10,7 @@ import * as SecureStore from 'expo-secure-store';
 
 const screenHeight = Dimensions.get('window').height;
 
-const Contacts = (props) => {
+const AddContacts = (props) => {
   const [contacts, setContacts] = useState(['']); // Initial state with an empty email field
 
   const handleInputChange = (index, value) => {
@@ -39,7 +39,7 @@ const Contacts = (props) => {
             }
           });
             console.log('Response:', response.data);
-          props.navigation.navigate("Message");
+          props.navigation.navigate("AddMessage");
         } else {
           console.error('No token found');
         }
@@ -67,28 +67,15 @@ const Contacts = (props) => {
     <GestureHandlerRootView>
     <View style={styles.fullHeightView}>
     <View style={{alignItems: 'center', width: 380}}>
-              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:25 , paddingVertical:22 , gap:120}}>
-              <Image source={require('../assets/images/logo.png')}  style={styles.image} />
-               <Text style={styles.generalText}>I Am Alive</Text>
-              </View>
-        <View
-          style={{
-            backgroundColor: 'white',
-            height: 700,
-            width: 410,
-            borderTopLeftRadius: 140,
-            paddingTop: 60,
-            alignItems: 'center',
-          }}>
+      
           <Text style={styles.welcomeText}>
           Set Emergency Contacts
           </Text>
-          <Text style={styles.optionalText}>(Optional)</Text>
           <Text  style={{
               color: 'grey',
               fontSize: 15,
               fontWeight: 'bold',
-              marginBottom: 24,
+              marginBottom: 44,
               width:"77%"
             }}>Enter the email addresses of your close contacts who you'd like to notify in case of an emergency. You can skip this step if you prefer.</Text>
           
@@ -107,7 +94,7 @@ const Contacts = (props) => {
             </Text>
           </View>
           <MyButton title="Continue" onPress={handleContinue} />
-        </View>
+
       </View>
     </View>
 </GestureHandlerRootView>
@@ -118,24 +105,14 @@ const Contacts = (props) => {
 const styles = StyleSheet.create({
   fullHeightView: {
     height: screenHeight,
-    backgroundColor: Colors.PRIMARY,
-  },
-  image: {
-    width: 60, 
-    height: 60, 
-  },
-  generalText:{
-    color: Colors.FONTSCOLOR,
-    fontFamily: 'KaushanScriptRegular',
-    fontSize:22,
-    marginTop:13,
 
-},
+  },
 welcomeText:{
   color: Colors.FONTSCOLOR,
   fontWeight:'bold',
   fontSize:22,
-marginBottom:5,
+marginBottom:45,
+marginTop:80
 },
 optionalText:{
     color: Colors.PRIMARY,
@@ -144,4 +121,4 @@ optionalText:{
   marginBottom:22
 }
 });
-export default Contacts
+export default AddContacts

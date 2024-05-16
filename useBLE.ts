@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PermissionsAndroid, Platform } from "react-native";
 import {
   BleError,
@@ -29,7 +29,7 @@ function useBLE(): BluetoothLowEnergyApi {
   const bleManager = useMemo(() => new BleManager(), []);
   const [allDevices, setAllDevices] = useState<Device[]>([]);
   const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
-  const [heartRate, setHeartRate] = useState<number>(80);
+  const [heartRate, setHeartRate] = useState<number>(0);
 
   const requestAndroid31Permissions = async () => {
     const bluetoothScanPermission = await PermissionsAndroid.request(
@@ -64,6 +64,16 @@ function useBLE(): BluetoothLowEnergyApi {
     );
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Generate a random number between 60 and 85
+      const randomHeartRate = Math.floor(Math.random() * (85 - 60 + 1)) + 60;
+      setHeartRate(randomHeartRate);
+    }, 10000); // 20000 milliseconds = 20 seconds
+
+    // Clear the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
   const requestPermissions = async () => {
     if (Platform.OS === "android") {
       if ((ExpoDevice.platformApiLevel ?? -1) < 31) {
