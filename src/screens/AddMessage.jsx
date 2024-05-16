@@ -29,7 +29,6 @@ const AddMessage = (props) => {
         });
   
         console.log('Response:', response.data);
-        props.navigation.navigate("Main");
         Alert.alert("Success", "Message saved successfully");
       } catch (error) {
         console.error('Error:', error);
@@ -44,19 +43,7 @@ const AddMessage = (props) => {
     <GestureHandlerRootView>
     <View style={styles.fullHeightView}>
     <View style={{alignItems: 'center', width: 380}}>
-              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:25 , paddingVertical:22 , gap:120}}>
-              <Image source={require('../assets/images/logo.png')}  style={styles.image} />
-               <Text style={styles.generalText}>I Am Alive</Text>
-              </View>
-        <View
-          style={{
-            backgroundColor: 'white',
-            height: 700,
-            width: 410,
-            borderTopLeftRadius: 140,
-            paddingTop: 60,
-            alignItems: 'center',
-          }}>
+
         <Text style={styles.welcomeText}>
                   Compose Emergency Message
           </Text>
@@ -84,7 +71,6 @@ const AddMessage = (props) => {
         placeholder="Enter your emergency message"
       />
           <MyButton title="Save" onPress={handleSendMessage} />
-        </View>
       </View>
     </View>
 </GestureHandlerRootView>
@@ -95,7 +81,6 @@ const AddMessage = (props) => {
 const styles = StyleSheet.create({
   fullHeightView: {
     height: screenHeight,
-    backgroundColor: Colors.PRIMARY,
   },
   image: {
     width: 60, 
@@ -112,7 +97,8 @@ welcomeText:{
   color: Colors.FONTSCOLOR,
   fontWeight:'bold',
   fontSize:19,
-marginBottom:25
+marginBottom:35,
+marginTop:80
 
 }
 });

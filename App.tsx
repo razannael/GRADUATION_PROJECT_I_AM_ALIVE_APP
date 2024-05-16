@@ -48,7 +48,8 @@ const MainDrawer = () => {
       <Drawer.Screen name="Location" component={Map} />
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="Heart Rate" component={HeartRate} />
-      <Drawer.Screen name="Add Contacts" component={AddContacts} />
+      <Drawer.Screen name="Contacts" component={AddContacts} />
+      <Drawer.Screen name="Message" component={AddMessage} />
     </Drawer.Navigator>
   );
 };
@@ -131,7 +132,6 @@ export default function App() {
           <Stack.Screen name="Main" component={MainDrawer} />
           <Stack.Screen name="SendCode" component={SendCode} />
           <Stack.Screen name="ForgotPassword" component={ForgetPassword} />
-          <Stack.Screen name="AddMessage" component={AddMessage} />
         </Stack.Navigator>
       </NavigationContainer>
       </UserLocationContext.Provider>

@@ -39,7 +39,6 @@ const AddContacts = (props) => {
             }
           });
             console.log('Response:', response.data);
-          props.navigation.navigate("AddMessage");
         } else {
           console.error('No token found');
         }
@@ -87,13 +86,14 @@ const AddContacts = (props) => {
           placeholder="Enter email address"
         />
       ))}
+      
        <View
             style={{alignItems: 'flex-end', width: '70%', paddingRight: 10, marginBottom: 140}} >
             <Text style={{color: Colors.PRIMARY, fontWeight: 'bold', fontSize: 13}} onPress={handleAddContact}>
             Add More Contacts
             </Text>
           </View>
-          <MyButton title="Continue" onPress={handleContinue} />
+          <MyButton title="Save" onPress={handleContinue} />
 
       </View>
     </View>
