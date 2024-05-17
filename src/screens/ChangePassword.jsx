@@ -20,7 +20,7 @@ import { useFonts } from "expo-font";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Profile = (props) => {
+const ChangePassword = (props) => {
   const [loaded] = useFonts({
     KaushanScriptRegular: require("../assets/fonts/KaushanScriptRegular.ttf"),
   });
@@ -29,12 +29,9 @@ const Profile = (props) => {
     return null;
   }
   // State to store input field values
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [password, setPassword] = useState("");
+  const [oldpassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isVictim, setIsVictim] = useState(true);
   // State to store validation messages
   const [validationMessage, setValidationMessage] = useState("");
   // Function to validate fields
@@ -101,50 +98,37 @@ const Profile = (props) => {
           style={{
             paddingTop: 30,
             alignItems: "center",
-            marginTop: 50,
+            marginTop: 150,
           }}
         >
-    
           <Field
-            placeholder="Username"
-            value={username}
-            onChangeText={setUsername} // Update state when text changes
+            placeholder="Your current Password"
+            secureTextEntry={true}
+            value={oldpassword}
+            onChangeText={setOldPassword} // Update state when text changes
           />
-                  <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 20 }}></View>
 
-</View>
           <Field
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType={"email-address"}
+            placeholder="New Password"
+            secureTextEntry={true}
+            value={newPassword}
+            onChangeText={setNewPassword} // Update state when text changes
           />
-                  <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 20 }}></View>
+          <Field
+            placeholder="Confirm New Password"
+            secureTextEntry={true}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+          <View style={{ marginTop: 20 }}></View>
 
-</View>
-          <Field placeholder="City" value={city} onChangeText={setCity} />
-          <View style={{ marginTop: 20}}>
-
-          </View>
-
-          <TouchableOpacity onPress={() => props.navigation.navigate("ChangePassword")}>
-                <Text
-                  style={{
-                    color: Colors.PRIMARY,
-                    fontWeight: "bold",
-                    fontSize: 13,
-                  }}
-                >
-                  Change Password ?
-                </Text>
-              </TouchableOpacity>
-              <View style={{ marginTop: 20}}>
-
-</View>
+          <View style={{ marginTop: 20 }}></View>
           <MyButton
             title="Update"
             onPress={() => {
-              handleSignupPress();
+              props.navigation.navigate("Main");
             }}
           />
           {/* Display validation message */}
@@ -170,6 +154,6 @@ const Profile = (props) => {
 const styles = StyleSheet.create({
   fullHeightView: {
     height: screenHeight,
-  }
+  },
 });
-export default Profile;
+export default ChangePassword;

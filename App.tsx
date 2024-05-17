@@ -22,6 +22,7 @@ import SendCode from './src/screens/SendCode';
 import ForgetPassword from './src/screens/ForgetPassword';
 import AddContacts from './src/screens/AddContacts';
 import AddMessage from './src/screens/AddMessage';
+import ChangePassword from './src/screens/ChangePassword';
 
 
 const Drawer = createDrawerNavigator();
@@ -46,7 +47,7 @@ const MainDrawer = () => {
     >
       <Drawer.Screen name="SOS" component={SOS} />
       <Drawer.Screen name="Location" component={Map} />
-      <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Personal Details" component={Profile} />
       <Drawer.Screen name="Heart Rate" component={HeartRate} />
       <Drawer.Screen name="Contacts" component={AddContacts} />
       <Drawer.Screen name="Message" component={AddMessage} />
@@ -132,6 +133,7 @@ export default function App() {
           <Stack.Screen name="Main" component={MainDrawer} />
           <Stack.Screen name="SendCode" component={SendCode} />
           <Stack.Screen name="ForgotPassword" component={ForgetPassword} />
+          <Stack.Screen name="ChangePassword" component={ChangePassword} />
         </Stack.Navigator>
       </NavigationContainer>
       </UserLocationContext.Provider>

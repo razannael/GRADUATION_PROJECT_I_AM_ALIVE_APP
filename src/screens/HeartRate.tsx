@@ -27,7 +27,6 @@ const HeartRate = () => {
   } = useBLE();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-
   const context = useContext(UserLocationContext);
 
   if (context === null) {
