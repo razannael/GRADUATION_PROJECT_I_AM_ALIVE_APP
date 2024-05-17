@@ -55,7 +55,6 @@ const Signup = props => {
   const handleSignupPress = async () => {
     if (validateFields()) {
       try {
-        // Replace 'YOUR_SIGNUP_API_ENDPOINT' with your actual API endpoint
         const response = await axios.post('https://graduation-project1-fapf.onrender.com/auth/signup', {
           name: username,
           email: email,
@@ -63,24 +62,23 @@ const Signup = props => {
           password: password,
           isVictim: isVictim
         });
-
-        // Check if signup was successful based on the response
+  
         if (response.data.success) {
-          // Signup successful
           Alert.alert('Success', 'Account created successfully!');
-          // Navigate to the sign-in screen or other actions
           props.navigation.navigate('SignIn');
         } else {
-          // Signup failed
-          Alert.alert('Signup Success', response.data.message);
-          console.log(response.data.message);
+          Alert.alert(response.data.message);
         }
       } catch (error) {
-        // Handle network error, parsing error, etc.
-        Alert.alert('Error', error.message);
+        if (error.response && error.response.data && error.response.data.message) {
+          Alert.alert(error.response.data.message);
+        } else {
+          Alert.alert('An unexpected error occurred. Please try again later.');
+        }
       }
     }
   };
+  
     
   return (
     <GestureHandlerRootView>

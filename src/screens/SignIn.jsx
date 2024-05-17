@@ -62,27 +62,30 @@ const SignIn = (props) => {
         );
         await SecureStore.setItemAsync("secure_token", response.data.token);
         console.log("Token stored:", response.data.token);
-        console.log("Response:", response.data);
         if (response.data.success) {
           Alert.alert("Success", "You are logged in!");
-          if (response.data.message === "") {
-            props.navigation.navigate("Contacts");
-          } else {
-            props.navigation.navigate("Main");
-          }
         } else {
           Alert.alert(response.data.message);
-          if (response.data.message === "") {
+          if (response.data.user.contactsEmail == false) {
             props.navigation.navigate("Contacts");
           } else {
             props.navigation.navigate("Main");
           }
         }
       } catch (error) {
-        Alert.alert("Error", error.message);
+        // Check if error response is in expected format
+        if (error.response && error.response.data && error.response.data.message) {
+          Alert.alert(error.response.data.message);
+        } else {
+          Alert.alert("An unexpected error occurred");
+        }
       }
     }
   };
+  
+
+  
+
 
   return (
     <GestureHandlerRootView>
