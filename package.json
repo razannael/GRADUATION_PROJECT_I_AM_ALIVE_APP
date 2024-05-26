@@ -19,7 +19,7 @@
     "eas-cli": "^7.8.5",
     "expo": "~50.0.14",
     "expo-av": "^13.10.6",
-    "expo-dev-client": "~3.3.11",
+    "expo-dev-client": "~3.3.12",
     "expo-device": "~5.9.4",
     "expo-font": "^11.10.3",
     "expo-location": "^16.5.5",
