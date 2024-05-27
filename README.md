@@ -1,7 +1,7 @@
 # I Am Alive 🚨
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/razannael/GRADUATION_PROJECT_I_AM_ALIVE_APP/main/assets/animation.gif" alt="I Am Alive Animation" width="200"/>
+  <img src="https://raw.githubusercontent.com/razannael/GRADUATION_PROJECT_I_AM_ALIVE_APP/assets/icon.png" alt="I Am Alive" width="200"/>
 </p>
 
 "I Am Alive" is a mobile application designed to assist people during disasters. The idea for the app emerged during the war on Gaza, with the aim of helping people in emergencies by providing crucial information to rescue teams.
