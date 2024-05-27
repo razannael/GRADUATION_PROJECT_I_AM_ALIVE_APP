@@ -1,26 +1,30 @@
 # I Am Alive 🚨
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/razannael/GRADUATION_PROJECT_I_AM_ALIVE_APP/main/assets/animation.gif" alt="I Am Alive Animation" width="200"/>
+</p>
+
 "I Am Alive" is a mobile application designed to assist people during disasters. The idea for the app emerged during the war on Gaza, with the aim of helping people in emergencies by providing crucial information to rescue teams.
 
-## Features 🌟
+## Features
 
-- **User Authentication** 🔐: Sign up and sign in to access the app.
-- **Emergency Contacts** 📧: Add emergency contact emails and a message to be sent when the SOS button is pressed.
-- **SOS Button** 🆘: Sends an emergency message to specified contacts.
-- **Smartwatch Integration** ⌚: Connect and disconnect with a smartwatch using Bluetooth Low Energy (BLE).
-- **Real-Time Heart Rate Monitoring** ❤️: Read and display heart rate data from the smartwatch.
-- **Location Tracking** 📍: Read and store the user's location.
-- **Backend Integration** 🌐: Use Axios to send data to the backend.
-- **Rescue Team Website** 🌍: A React-based website for rescue teams to monitor heart rates and locations of people in distress.
+- **User Authentication**: Sign up and sign in to access the app.
+- **Emergency Contacts**: Add emergency contact emails and a message to be sent when the SOS button is pressed.
+- **SOS Button**: Sends an emergency message to specified contacts.
+- **Smartwatch Integration**: Connect and disconnect with a smartwatch using Bluetooth Low Energy (BLE).
+- **Real-Time Heart Rate Monitoring**: Read and display heart rate data from the smartwatch.
+- **Location Tracking**: Read and store the user's location.
+- **Backend Integration**: Use Axios to send data to the backend.
+- **Rescue Team Website**: A React-based website for rescue teams to monitor heart rates and locations of people in distress.
 
-## Getting Started 🚀
+## Getting Started
 
-### Prerequisites ✅
+### Prerequisites
 
 - [Node.js](https://nodejs.org/)
 - [Expo CLI](https://expo.dev/tools)
 
-### Installation 🔧
+### Installation
 
 1. Clone the repository:
 
@@ -40,7 +44,7 @@
     npm install
     ```
 
-### Running the App ▶️
+### Running the App
 
 1. To start the app:
 
@@ -66,7 +70,7 @@
     npm run web
     ```
 
-## Usage 📱
+## Usage
 
 1. **Sign Up / Sign In**: Create an account or log in to access the app.
 2. **Add Emergency Contacts**: Enter email addresses of your emergency contacts and a message.
@@ -75,7 +79,7 @@
 5. **Location Tracking**: Your location is tracked and sent to the backend.
 6. **Rescue Team Monitoring**: Rescue teams can monitor your heart rate and location via the website.
 
-## Contributing 🤝
+## Contributing
 
 1. Fork the repository.
 2. Create your feature branch (`git checkout -b feature/new-feature`).
@@ -83,13 +87,18 @@
 4. Push to the branch (`git push origin feature/new-feature`).
 5. Open a pull request.
 
-## License 📜
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments 🙏
+## Acknowledgments
 
 - **Inspiration**: The app idea originated during the war on Gaza to help people in emergencies.
 - **Team**: Thanks to my team for their hard work and dedication.
 
 ---
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/razannael/GRADUATION_PROJECT_I_AM_ALIVE_APP/main/assets/animation.gif" alt="I Am Alive Animation" width="200"/>
+</p>
+
