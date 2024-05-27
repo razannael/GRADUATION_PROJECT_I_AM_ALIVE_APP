@@ -39,5 +39,7 @@
 ### Running the App
 
 1. To start the app:
+   
    ```
    npm start
+   ```
