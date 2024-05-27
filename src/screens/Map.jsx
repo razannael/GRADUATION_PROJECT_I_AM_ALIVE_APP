@@ -7,7 +7,7 @@ const Map = () => {
 const { location } = useContext(UserLocationContext);
 
 if (!location) {
-  return <Text>No location data available</Text>; // Fallback UI
+  return <Text style={{ fontSize: 24 , textAlign: 'center' , marginTop: 200}}>No location data available</Text>; // Fallback UI
 }
 
 return location?.latitude && (

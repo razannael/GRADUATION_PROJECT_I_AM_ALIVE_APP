@@ -56,7 +56,6 @@ const MainDrawer = () => {
 };
 
 
-
   // Add interface for your location state
 interface LocationState {
     latitude: number;
@@ -120,8 +119,10 @@ export default function App() {
   }
 
 
+
   return (
     <UserLocationContext.Provider
+    
     value={{ location, setLocation}}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
