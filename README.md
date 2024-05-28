@@ -97,7 +97,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/razannael/GRADUATION_PROJECT_I_AM_ALIVE_APP/main/assets/animation.gif" alt="I Am Alive Animation" width="200"/>
-</p>
 
