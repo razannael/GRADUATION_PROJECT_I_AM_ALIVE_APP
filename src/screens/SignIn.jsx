@@ -63,9 +63,7 @@ const SignIn = (props) => {
         await SecureStore.setItemAsync("secure_token", response.data.token);
         console.log("Token stored:", response.data.token);
         if (response.data.success) {
-          Alert.alert("Success", "You are logged in!");
         } else {
-          Alert.alert(response.data.message);
           if (response.data.user.contactsEmail == false) {
             props.navigation.navigate("Contacts");
           } else {
