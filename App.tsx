@@ -23,6 +23,7 @@ import ForgetPassword from './src/screens/ForgetPassword';
 import AddContacts from './src/screens/AddContacts';
 import AddMessage from './src/screens/AddMessage';
 import ChangePassword from './src/screens/ChangePassword';
+import HelpYourselfScreen from './src/screens/HelpYourselfScreen';
 
 
 const Drawer = createDrawerNavigator();
@@ -51,6 +52,8 @@ const MainDrawer = () => {
       <Drawer.Screen name="Heart Rate" component={HeartRate} />
       <Drawer.Screen name="Contacts" component={AddContacts} />
       <Drawer.Screen name="Message" component={AddMessage} />
+      <Drawer.Screen name="Help Yourself" component={HelpYourselfScreen} />
+
     </Drawer.Navigator>
   );
 };

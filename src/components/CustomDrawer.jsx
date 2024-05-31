@@ -65,7 +65,7 @@ const CustomDrawer = props => {
         />
         </View>
       </DrawerContentScrollView>
-      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc',marginBottom:40}}>
+      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc',marginBottom:30}}>
         <TouchableOpacity onPress={onShare} style={{paddingVertical: 10}}>
           <View style={{flexDirection: 'row', alignItems: 'center', gap:3}}>
           <AntDesign name="sharealt" size={18} color="gray" />
