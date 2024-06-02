@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, Image, Alert } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Image} from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../utils/Colors.js'
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -6,11 +6,21 @@ import Field from '../components/Field.jsx';
 import MyButton from '../components/MyButton.jsx';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import CustomAlert from '../components/CustomAlert.jsx';
 
 
 const screenHeight = Dimensions.get('window').height;
 
 const Contacts = (props) => {
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const showAlert = (title, message) => {
+    setAlertTitle(title);
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
   const [contacts, setContacts] = useState(['']); // Initial state with an empty email field
 
   const handleInputChange = (index, value) => {
@@ -67,7 +77,7 @@ const Contacts = (props) => {
     <GestureHandlerRootView>
     <View style={styles.fullHeightView}>
     <View style={{alignItems: 'center', width: 380}}>
-              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:25 , paddingVertical:22 , gap:120}}>
+              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:5 , paddingVertical:22 , gap:120}}>
               <Image source={require('../assets/images/logo.png')}  style={styles.image} />
                <Text style={styles.generalText}>I Am Alive</Text>
               </View>
@@ -110,6 +120,12 @@ const Contacts = (props) => {
         </View>
       </View>
     </View>
+    <CustomAlert
+            visible={alertVisible} 
+            onClose={() => setAlertVisible(false)} 
+            title={alertTitle} 
+            message={alertMessage} 
+          />
 </GestureHandlerRootView>
 
   )

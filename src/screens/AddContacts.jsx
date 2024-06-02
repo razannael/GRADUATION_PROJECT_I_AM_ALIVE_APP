@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, Image, Alert } from 'react-native'
+import { View, Text, StyleSheet, Dimensions} from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../utils/Colors.js'
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';

@@ -9,9 +9,20 @@ import { useFonts } from 'expo-font';
 import { Audio } from 'expo-av';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+import CustomAlert from '../components/CustomAlert.jsx';
 
 
 const SOS = () => {
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const showAlert = (title, message) => {
+    setAlertTitle(title);
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
+
   const [sound, setSound] = useState();  
   const [isPlaying, setIsPlaying] = useState(false); // New state variable to track sound playing status
 
@@ -58,7 +69,7 @@ const SOS = () => {
           }
         });
         console.log('Response:', response.data);
-        Alert.alert(response.data.message);
+        showAlert('Your emergency message has been sent successfully' , 'We will reach out to you shortly.');
       } catch (error) {
         console.error('Error:', error);
       }
@@ -79,6 +90,12 @@ const SOS = () => {
       <FontAwesome name="bell" size={39} color="#FF9801" />
       </TouchableOpacity>
       </View>
+      <CustomAlert
+            visible={alertVisible} 
+            onClose={() => setAlertVisible(false)} 
+            title={alertTitle} 
+            message={alertMessage} 
+          />
     </SafeAreaView>
   );
 }
@@ -113,7 +130,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 30,
     color: Colors.FONTSCOLOR
-  }
+  },
+  alertButton: {
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#666',
+    alignItems: 'center',
+    marginTop: 20,
+    width: '70%',
+    marginBottom: 15,
+    marginStart: '15%',
+  },
+  buttonText: {
+    color: '#666',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 export default SOS;

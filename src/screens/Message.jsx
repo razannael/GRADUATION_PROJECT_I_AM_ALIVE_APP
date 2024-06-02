@@ -6,10 +6,20 @@ import Field from '../components/Field.jsx';
 import MyButton from '../components/MyButton.jsx';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+import CustomAlert from '../components/CustomAlert.jsx';
 
 const screenHeight = Dimensions.get('window').height;
 
 const Message = (props) => {
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const showAlert = (title, message) => {
+    setAlertTitle(title);
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
   const [message, setMessage] = useState('');
 
   const handleMessageChange = (text) => {
@@ -30,7 +40,6 @@ const Message = (props) => {
   
         console.log('Response:', response.data);
         props.navigation.navigate("Main");
-        Alert.alert("Success", "Message saved successfully");
       } catch (error) {
         console.error('Error:', error);
       }
@@ -43,7 +52,7 @@ const Message = (props) => {
     <GestureHandlerRootView>
     <View style={styles.fullHeightView}>
     <View style={{alignItems: 'center', width: 380}}>
-              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:25 , paddingVertical:22 , gap:120}}>
+              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:5 , paddingVertical:22 , gap:120}}>
               <Image source={require('../assets/images/logo.png')}  style={styles.image} />
                <Text style={styles.generalText}>I Am Alive</Text>
               </View>
@@ -86,6 +95,12 @@ const Message = (props) => {
         </View>
       </View>
     </View>
+    <CustomAlert
+            visible={alertVisible} 
+            onClose={() => setAlertVisible(false)} 
+            title={alertTitle} 
+            message={alertMessage} 
+          />
 </GestureHandlerRootView>
 
   )

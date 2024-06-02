@@ -6,11 +6,21 @@ import Field from '../components/Field.jsx';
 import MyButton from '../components/MyButton.jsx';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
+import CustomAlert from '../components/CustomAlert.jsx';
 
 const screenHeight = Dimensions.get('window').height;
 
 
 const Signup = props => {
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const showAlert = (title, message) => {
+    setAlertTitle(title);
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
     
  const [loaded] = useFonts({
     KaushanScriptRegular: require('../assets/fonts/KaushanScriptRegular.ttf'),
@@ -64,16 +74,16 @@ const Signup = props => {
         });
   
         if (response.data.success) {
-          Alert.alert('Success', 'Account created successfully!');
+          showAlert('Success', 'Account created successfully!');
           props.navigation.navigate('SignIn');
         } else {
-          Alert.alert(response.data.message);
+          showAlert( response.data.message, '');
         }
       } catch (error) {
         if (error.response && error.response.data && error.response.data.message) {
-          Alert.alert(error.response.data.message);
+          showAlert(error.response.data.message ,'');
         } else {
-          Alert.alert('An unexpected error occurred. Please try again later.');
+          showAlert('An unexpected error occurred. Please try again later.','');
         }
       }
     }
@@ -84,7 +94,7 @@ const Signup = props => {
     <GestureHandlerRootView>
            <View style={styles.fullHeightView}>
            <View style={{alignItems: 'center', width: 380}}>
-              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:25 , paddingVertical:22 , gap:120}}>
+              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:6 , paddingVertical:22 , gap:120}}>
               <Image source={require('../assets/images/logo.png')}  style={styles.image} />
                <Text style={styles.generalText}>I Am Alive</Text>
               </View>
@@ -199,6 +209,12 @@ const Signup = props => {
           </View>
         </View>
       </View>
+      <CustomAlert
+            visible={alertVisible} 
+            onClose={() => setAlertVisible(false)} 
+            title={alertTitle} 
+            message={alertMessage} 
+          />
     </View>
     </GestureHandlerRootView>
 
@@ -220,5 +236,22 @@ const styles = StyleSheet.create({
     fontSize:22,
     marginTop:13,
 
-},})
+},
+alertButton: {
+  padding: 10,
+  borderRadius: 5,
+  borderWidth: 1,
+  borderColor: '#666',
+  alignItems: 'center',
+  marginTop: 20,
+  width: '70%',
+  marginBottom: 15,
+  marginStart: '15%',
+},
+buttonText: {
+  color: '#666',
+  fontSize: 16,
+  fontWeight: 'bold',
+},
+})
 export default Signup;

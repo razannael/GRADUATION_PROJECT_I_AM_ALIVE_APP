@@ -6,10 +6,20 @@ import Field from '../components/Field.jsx';
 import MyButton from '../components/MyButton.jsx';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+import CustomAlert from '../components/CustomAlert.jsx';
 
 const screenHeight = Dimensions.get('window').height;
 
 const AddMessage = (props) => {
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const showAlert = (title, message) => {
+    setAlertTitle(title);
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
   const [message, setMessage] = useState('');
 
   const handleMessageChange = (text) => {
@@ -29,7 +39,7 @@ const AddMessage = (props) => {
         });
   
         console.log('Response:', response.data);
-        Alert.alert("Success", "Message saved successfully");
+        showAlert("Success", "Message saved successfully");
       } catch (error) {
         console.error('Error:', error);
       }
@@ -73,6 +83,12 @@ const AddMessage = (props) => {
           <MyButton title="Save" onPress={handleSendMessage} />
       </View>
     </View>
+    <CustomAlert
+            visible={alertVisible} 
+            onClose={() => setAlertVisible(false)} 
+            title={alertTitle} 
+            message={alertMessage} 
+          />
 </GestureHandlerRootView>
 
   )
