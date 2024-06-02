@@ -105,7 +105,7 @@ const SignIn = (props) => {
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-start",
-              marginTop: 6,
+              marginTop: 9,
               paddingVertical: 22,
               gap: 120,
             }}
