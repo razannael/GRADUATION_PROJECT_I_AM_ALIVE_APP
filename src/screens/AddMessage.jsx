@@ -30,7 +30,7 @@ const AddMessage = (props) => {
   
     if (token) {
       try {
-        const response = await axios.post('https://graduation-project1-fapf.onrender.com/victim/setEmergencyMessage', {
+        const response = await axios.post('https://graduation-project-plum.vercel.app//victim/setEmergencyMessage', {
           message: message
         }, {
           headers: {

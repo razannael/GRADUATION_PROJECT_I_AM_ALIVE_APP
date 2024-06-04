@@ -63,7 +63,7 @@ const SOS = () => {
   
     if (token) {
       try {
-        const response = await axios.post('https://graduation-project1-fapf.onrender.com/victim/sendSOSMessage', {}, {
+        const response = await axios.post('https://graduation-project-plum.vercel.app//victim/sendSOSMessage', {}, {
           headers: {
             Authorization: `IAMALIVE__${token}`
           }

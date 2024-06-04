@@ -14,7 +14,7 @@ const SendCode = (props) => {
 
   const handleSendCode = async() => {
       try {
-        const response = await axios.patch('https://graduation-project1-fapf.onrender.com/auth/sendCode', {
+        const response = await axios.patch('https://graduation-project-plum.vercel.app//auth/sendCode', {
           email: email
         })
         Alert.alert('Code Sent! Check your email');

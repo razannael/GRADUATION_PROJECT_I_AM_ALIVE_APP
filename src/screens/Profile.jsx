@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Touchable,
   Dimensions,
   StyleSheet,
-  Image,
   Alert,
 } from "react-native";
 import Colors from "../utils/Colors.js";
@@ -28,69 +26,47 @@ const Profile = (props) => {
   if (!loaded) {
     return null;
   }
+
   // State to store input field values
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isVictim, setIsVictim] = useState(true);
   // State to store validation messages
   const [validationMessage, setValidationMessage] = useState("");
-  // Function to validate fields
-  const validateFields = () => {
-    // Add your validation logic here
-    // Example: Check if all fields are filled
-    if (!username || !email || !city || !password || !confirmPassword) {
-      setValidationMessage("Please fill in all fields.");
-      return false;
+
+  // Function to handle update button press
+  const handleUpdatePress = async () => {
+    if (!username || !city) {
+      setValidationMessage("Please fill in both fields.");
+      return;
     }
-    // Example: Check for valid email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setValidationMessage("Please enter a valid email address.");
-      return false;
-    }
-    // Example: Check if passwords match
-    if (password !== confirmPassword) {
-      setValidationMessage("Passwords do not match.");
-      return false;
-    }
-    // If all validations pass
-    setValidationMessage("");
-    return true;
-  };
-  // Function to handle signup button press
-  const handleSignupPress = async () => {
-    if (validateFields()) {
-      try {
-        // Replace 'YOUR_SIGNUP_API_ENDPOINT' with your actual API endpoint
-        const response = await axios.post(
-          "https://graduation-project1-fapf.onrender.com/auth/signup",
+
+    try {
+      const token = await SecureStore.getItemAsync('secure_token');
+      console.log('Retrieved token:', token); // Add this line to check
+
+      if (!token) {
+        const response = await axios.put(
+          "https://graduation-project-plum.vercel.app/victim/updateInfo",
           {
             name: username,
-            email: email,
             city: city,
-            password: password,
-            isVictim: isVictim,
+          },
+          {
+            headers: {
+              Authorization: `IAMALIVE__${token}`
+            }
           }
         );
-
-        // Check if signup was successful based on the response
-        if (response.data.success) {
-          // Signup successful
-          Alert.alert("Success", "Account created successfully!");
-          // Navigate to the sign-in screen or other actions
-          props.navigation.navigate("SignIn");
-        } else {
-          // Signup failed
-          Alert.alert("Signup Success", response.data.message);
-          console.log(response.data.message);
-        }
-      } catch (error) {
-        // Handle network error, parsing error, etc.
-        Alert.alert("Error", error.message);
       }
+
+      if (response.data.success) {
+        Alert.alert("Success", "Profile updated successfully!");
+      } else {
+        Alert.alert("Update Failed", response.data.message);
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      Alert.alert("Error", error.message);
     }
   };
 
@@ -101,51 +77,33 @@ const Profile = (props) => {
           style={{
             paddingTop: 30,
             alignItems: "center",
-            marginTop: 50,
+            marginTop: 90,
           }}
         >
-    
           <Field
             placeholder="Username"
             value={username}
             onChangeText={setUsername} // Update state when text changes
           />
-                  <View style={{ marginTop: 20 }}>
-
-</View>
-          <Field
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType={"email-address"}
-          />
-                  <View style={{ marginTop: 20 }}>
-
-</View>
+          <View style={{ marginTop: 20 }} />
           <Field placeholder="City" value={city} onChangeText={setCity} />
-          <View style={{ marginTop: 20}}>
-
-          </View>
+          <View style={{ marginTop: 20 }} />
 
           <TouchableOpacity onPress={() => props.navigation.navigate("ChangePassword")}>
-                <Text
-                  style={{
-                    color: Colors.PRIMARY,
-                    fontWeight: "bold",
-                    fontSize: 13,
-                  }}
-                >
-                  Change Password ?
-                </Text>
-              </TouchableOpacity>
-              <View style={{ marginTop: 20}}>
-
-</View>
+            <Text
+              style={{
+                color: Colors.PRIMARY,
+                fontWeight: "bold",
+                fontSize: 13,
+              }}
+            >
+              Change Password ?
+            </Text>
+          </TouchableOpacity>
+          <View style={{ marginTop: 70 }} />
           <MyButton
             title="Update"
-            onPress={() => {
-              handleSignupPress();
-            }}
+            onPress={handleUpdatePress}
           />
           {/* Display validation message */}
           {!!validationMessage && (
@@ -172,4 +130,5 @@ const styles = StyleSheet.create({
     height: screenHeight,
   }
 });
+
 export default Profile;

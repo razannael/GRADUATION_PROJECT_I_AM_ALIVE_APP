@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -39,7 +39,7 @@ const HeartRate = () => {
   
     if (token) {
       try {
-        const response = await axios.post('https://graduation-project1-fapf.onrender.com/victim/setHeartAndLocation',
+        const response = await axios.post('https://graduation-project-plum.vercel.app//victim/setHeartAndLocation',
           {
             heartRate: heartRate,
             location: {
@@ -54,13 +54,21 @@ const HeartRate = () => {
         });
   
         console.log('Response:', response.data);
+        console.log('heartRate:', heartRate);
+        console.log('location:', location);
       } catch (error) {
         console.error('Error:', error);
       }
+
     } else {
       console.error('No token found');
     }
   };
+
+
+useEffect(() => {
+  handleheartRateLocation();
+}, [heartRate, location]);
 
 
 
@@ -85,7 +93,7 @@ const HeartRate = () => {
       <View style={styles.heartRateTitleWrapper}>
         {connectedDevice ? (
           <>
-            <TouchableOpacity onPress={handleheartRateLocation} activeOpacity={1}>
+            <TouchableOpacity activeOpacity={1}>
                <PulseIndicator />
             </TouchableOpacity>
             <Text style={styles.heartRateTitleText}>Your Heart Rate Is:</Text>

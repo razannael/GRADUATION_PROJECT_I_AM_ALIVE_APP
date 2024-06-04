@@ -31,7 +31,7 @@ const AddContacts = (props) => {
         console.log('Retrieved token:', token); // Add this line to check
 
         if (token) {
-          const response = await axios.post('https://graduation-project1-fapf.onrender.com/victim/setEmergencyContacts', {
+          const response = await axios.post('https://graduation-project-plum.vercel.app//victim/setEmergencyContacts', {
             contactsEmail: contacts.filter(email => email.trim() !== '')
           }, {
             headers: {

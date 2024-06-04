@@ -65,7 +65,7 @@ const Signup = props => {
   const handleSignupPress = async () => {
     if (validateFields()) {
       try {
-        const response = await axios.post('https://graduation-project1-fapf.onrender.com/auth/signup', {
+        const response = await axios.post('https://graduation-project-plum.vercel.app//auth/signup', {
           name: username,
           email: email,
           city: city,

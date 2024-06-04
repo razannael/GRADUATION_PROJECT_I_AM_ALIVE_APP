@@ -15,7 +15,7 @@ const ForgotPassword = (props) => {
     const [password, setPassword] = useState('');
   const handleForgetPassword = async() => {
       try {
-        const response = await axios.post('https://graduation-project1-fapf.onrender.com/auth/forgetPassword', {
+        const response = await axios.post('https://graduation-project-plum.vercel.app//auth/forgetPassword', {
             code: code,
             newPassword: password,
         },
@@ -38,7 +38,7 @@ const ForgotPassword = (props) => {
     <GestureHandlerRootView>
     <View style={styles.fullHeightView}>
     <View style={{alignItems: 'center', width: 380}}>
-              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:25 , paddingVertical:22 , gap:120}}>
+              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:10 , paddingVertical:22 , gap:120}}>
               <Image source={require('../assets/images/logo.png')}  style={styles.image} />
                <Text style={styles.generalText}>I Am Alive</Text>
               </View>
