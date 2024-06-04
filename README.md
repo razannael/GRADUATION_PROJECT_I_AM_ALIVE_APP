@@ -16,59 +16,7 @@
 - **Backend Integration**: Use Axios to send data to the backend.
 - **Rescue Team Website**: A React-based website for rescue teams to monitor heart rates and locations of people in distress.
 
-## Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/)
-- [Expo CLI](https://expo.dev/tools)
-
-### Installation
-
-1. Clone the repository:
-
-    ```sh
-    git clone https://github.com/yourusername/i-am-alive.git
-    ```
-
-2. Navigate to the project directory:
-
-    ```sh
-    cd i-am-alive
-    ```
-
-3. Install the dependencies:
-
-    ```sh
-    npm install
-    ```
-
-### Running the App
-
-1. To start the app:
-
-    ```sh
-    npm start
-    ```
-
-2. To run the app on an Android device:
-
-    ```sh
-    npm run android
-    ```
-
-3. To run the app on an iOS device:
-
-    ```sh
-    npm run ios
-    ```
-
-4. To run the app in a web browser:
-
-    ```sh
-    npm run web
-    ```
-
+  
 ## Usage
 
 1. **Sign Up / Sign In**: Create an account or log in to access the app.
@@ -78,13 +26,6 @@
 5. **Location Tracking**: Your location is tracked and sent to the backend.
 6. **Rescue Team Monitoring**: Rescue teams can monitor your heart rate and location via the website.
 
-## Contributing
-
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/new-feature`).
-3. Commit your changes (`git commit -m 'Add some new feature'`).
-4. Push to the branch (`git push origin feature/new-feature`).
-5. Open a pull request.
 
 ## License
 
