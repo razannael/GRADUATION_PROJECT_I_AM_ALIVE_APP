@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import {
 import Field from "../components/Field.jsx";
 import MyButton from "../components/MyButton.jsx";
 import axios from "axios";
+import * as SecureStore from 'expo-secure-store';
 import { useFonts } from "expo-font";
 
 const screenHeight = Dimensions.get("window").height;
@@ -33,6 +34,32 @@ const Profile = (props) => {
   // State to store validation messages
   const [validationMessage, setValidationMessage] = useState("");
 
+  // Fetch user data when the component mounts
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = await SecureStore.getItemAsync('secure_token');
+        if (!token) {
+          Alert.alert("Error", "No token found");
+          return;
+        }
+
+        const response = await axios.get("https://graduation-project-plum.vercel.app//victim/info", {
+          headers: {
+            Authorization: `IAMALIVE__${token}`
+          }
+        });
+          console.log(response.data.victim.name);
+          setUsername(response.data.victim.name);
+          setCity(response.data.victim.city);
+          console.log(response.data.victim.city);
+      } catch (error) {
+        console.log(error.message);}
+    };
+
+    fetchUserData();
+  }, []);
+
   // Function to handle update button press
   const handleUpdatePress = async () => {
     if (!username || !city) {
@@ -42,28 +69,28 @@ const Profile = (props) => {
 
     try {
       const token = await SecureStore.getItemAsync('secure_token');
-      console.log('Retrieved token:', token); // Add this line to check
-
       if (!token) {
-        const response = await axios.put(
-          "https://graduation-project-plum.vercel.app/victim/updateInfo",
-          {
-            name: username,
-            city: city,
-          },
-          {
-            headers: {
-              Authorization: `IAMALIVE__${token}`
-            }
-          }
-        );
+        Alert.alert("Error", "No token found");
+        return;
       }
+
+      const response = await axios.put(
+        "https://graduation-project-plum.vercel.app//victim/updateInfo",
+        {
+          name: username,
+          city: city,
+        },
+        {
+          headers: {
+            Authorization: `IAMALIVE__${token}`
+          }
+        }
+      );
 
       if (response.data.success) {
         Alert.alert("Success", "Profile updated successfully!");
       } else {
-        Alert.alert("Update Failed", response.data.message);
-        console.log(response.data.message);
+        Alert.alert(response.data.message);
       }
     } catch (error) {
       Alert.alert("Error", error.message);
@@ -73,13 +100,7 @@ const Profile = (props) => {
   return (
     <GestureHandlerRootView>
       <View style={styles.fullHeightView}>
-        <View
-          style={{
-            paddingTop: 30,
-            alignItems: "center",
-            marginTop: 90,
-          }}
-        >
+        <View style={styles.container}>
           <Field
             placeholder="Username"
             value={username}
@@ -90,13 +111,7 @@ const Profile = (props) => {
           <View style={{ marginTop: 20 }} />
 
           <TouchableOpacity onPress={() => props.navigation.navigate("ChangePassword")}>
-            <Text
-              style={{
-                color: Colors.PRIMARY,
-                fontWeight: "bold",
-                fontSize: 13,
-              }}
-            >
+            <Text style={styles.changePasswordText}>
               Change Password ?
             </Text>
           </TouchableOpacity>
@@ -107,18 +122,10 @@ const Profile = (props) => {
           />
           {/* Display validation message */}
           {!!validationMessage && (
-            <Text style={{ color: "red", marginBottom: 20 }}>
+            <Text style={styles.validationMessage}>
               {validationMessage}
             </Text>
           )}
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              marginTop: 10,
-            }}
-          ></View>
         </View>
       </View>
     </GestureHandlerRootView>
@@ -128,7 +135,21 @@ const Profile = (props) => {
 const styles = StyleSheet.create({
   fullHeightView: {
     height: screenHeight,
-  }
+  },
+  container: {
+    paddingTop: 30,
+    alignItems: "center",
+    marginTop: 90,
+  },
+  changePasswordText: {
+    color: Colors.PRIMARY,
+    fontWeight: "bold",
+    fontSize: 13,
+  },
+  validationMessage: {
+    color: "red",
+    marginBottom: 20,
+  },
 });
 
 export default Profile;

@@ -72,10 +72,11 @@ const SignIn = (props) => {
         );
         await SecureStore.setItemAsync("secure_token", response.data.token);
         console.log("Token stored:", response.data.token);
+        console.log("Response:", response.data);
 
         if (response.data.success) {
         } else {
-          if (response.data.user.contactsEmail == false) {
+          if (response.data.user && response.data.user.contactsEmail === false) {
             props.navigation.navigate("Contacts");
           } else {
             props.navigation.navigate("Main");
