@@ -6,11 +6,23 @@ import Field from '../components/Field.jsx';
 import MyButton from '../components/MyButton.jsx';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import CustomAlert from '../components/CustomAlert.jsx';
 
 
 const screenHeight = Dimensions.get('window').height;
 
 const AddContacts = (props) => {
+
+
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const showAlert = (title, message) => {
+    setAlertTitle(title);
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
   const [contacts, setContacts] = useState(['']); // Initial state with an empty email field
 
   const handleInputChange = (index, value) => {
@@ -39,6 +51,8 @@ const AddContacts = (props) => {
             }
           });
             console.log('Response:', response.data);
+            showAlert("Contacts saved successfully", "");
+
         } else {
           console.error('No token found');
         }
@@ -74,7 +88,7 @@ const AddContacts = (props) => {
               color: 'grey',
               fontSize: 15,
               fontWeight: 'bold',
-              marginBottom: 44,
+              marginBottom: 47,
               width:"77%"
             }}>Enter the email addresses of your close contacts who you'd like to notify in case of an emergency. You can skip this step if you prefer.</Text>
           
@@ -88,13 +102,19 @@ const AddContacts = (props) => {
       ))}
       
        <View
-            style={{alignItems: 'flex-end', width: '70%', paddingRight: 10, marginBottom: 140}} >
+            style={{alignItems: 'flex-end', width: '70%', paddingRight: 10, marginBottom: 100}} >
             <Text style={{color: Colors.PRIMARY, fontWeight: 'bold', fontSize: 13}} onPress={handleAddContact}>
             Add More Contacts
             </Text>
           </View>
           <MyButton title="Save" onPress={handleContinue} />
 
+          <CustomAlert
+            visible={alertVisible} 
+            onClose={() => setAlertVisible(false)} 
+            title={alertTitle} 
+            message={alertMessage} 
+          />
       </View>
     </View>
 </GestureHandlerRootView>
@@ -112,7 +132,7 @@ welcomeText:{
   fontWeight:'bold',
   fontSize:22,
 marginBottom:45,
-marginTop:80
+marginTop:70
 },
 optionalText:{
     color: Colors.PRIMARY,

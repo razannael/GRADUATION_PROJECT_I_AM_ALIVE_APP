@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,37 @@ import {
 } from '@react-navigation/drawer';
 import Colors from '../utils/Colors.js';
 import { AntDesign } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
+import axios from 'axios';
 
 const CustomDrawer = props => {
 
+
+  const [username, setUsername] = useState("");
+
+  // Fetch user data when the component mounts
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = await SecureStore.getItemAsync('secure_token');
+        if (!token) {
+          Alert.alert("Error", "No token found");
+          return;
+        }
+
+        const response = await axios.get("https://graduation-project-plum.vercel.app//victim/info", {
+          headers: {
+            Authorization: `IAMALIVE__${token}`
+          }
+        });
+          console.log(response.data.victim.name);
+          setUsername(response.data.victim.name);
+      } catch (error) {
+        console.log(error.message);}
+    };
+
+    fetchUserData();
+  }, []);
 
   const onShare = async () => {
     try {
@@ -52,12 +80,13 @@ const CustomDrawer = props => {
           <Text
             style={{
               fontFamily: 'KaushanScriptRegular',
-              color: Colors.FONTSCOLOR,
+              color: Colors.SoftGreen,
               fontSize: 18,
               marginBottom: 5,
               fontWeight: 'bold',
+              textTransform: 'capitalize',
             }}>
-            I Am Alive
+            Hi {username}!
           </Text>
         </View>
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 20}}>

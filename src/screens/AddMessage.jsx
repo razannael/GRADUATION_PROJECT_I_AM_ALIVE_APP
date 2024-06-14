@@ -39,7 +39,7 @@ const AddMessage = (props) => {
         });
   
         console.log('Response:', response.data);
-        showAlert("Success", "Message saved successfully");
+        showAlert("Message saved successfully" , '');
       } catch (error) {
         console.error('Error:', error);
       }
