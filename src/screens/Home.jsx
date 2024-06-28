@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Colors from '../utils/Colors.js';
 import MyButton from '../components/MyButton.jsx'
 import { useFonts } from 'expo-font';
+import { StatusBar } from 'expo-status-bar';
 
 
 
@@ -16,6 +17,7 @@ const Home = (props) => {
  }
   return (
   <View style={styles.container}>
+    
     <Image source={require('../assets/images/logo.png')}  style={styles.image} />
     <Text style={styles.generalText}>I’m Alive</Text>
     <MyButton title="Sign In" onPress={() => props.navigation.navigate("SignIn")}/>

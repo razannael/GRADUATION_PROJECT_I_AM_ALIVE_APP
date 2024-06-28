@@ -29,7 +29,7 @@ const SendCode = (props) => {
     <GestureHandlerRootView>
     <View style={styles.fullHeightView}>
     <View style={{alignItems: 'center', width: 380}}>
-              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:25 , paddingVertical:22 , gap:120}}>
+              <View style={{display: 'flex', flexDirection :'row', justifyContent: "flex-start",marginTop:15 , paddingVertical:22 , gap:120}}>
               <Image source={require('../assets/images/logo.png')}  style={styles.image} />
                <Text style={styles.generalText}>I Am Alive</Text>
               </View>

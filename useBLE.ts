@@ -65,15 +65,19 @@ function useBLE(): BluetoothLowEnergyApi {
   };
 
   useEffect(() => {
+    // Set initial heart rate to 83
+    setHeartRate(83);
+  
     const interval = setInterval(() => {
       // Generate a random number between 60 and 85
       const randomHeartRate = Math.floor(Math.random() * (85 - 60 + 1)) + 60;
       setHeartRate(randomHeartRate);
-    }, 10000); // 20000 milliseconds = 20 seconds
-
+    }, 20000); // 15000 milliseconds = 15 seconds
+  
     // Clear the interval on component unmount
     return () => clearInterval(interval);
   }, []);
+  
   const requestPermissions = async () => {
     if (Platform.OS === "android") {
       if ((ExpoDevice.platformApiLevel ?? -1) < 31) {
