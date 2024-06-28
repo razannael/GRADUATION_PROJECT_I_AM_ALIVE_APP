@@ -34,7 +34,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - **Inspiration**: The app idea originated during the war on Gaza to help people in emergencies.
-- **Team**: Thanks to my team for their hard work and dedication.
 
 ---
 
