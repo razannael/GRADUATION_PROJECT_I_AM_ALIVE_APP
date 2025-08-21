@@ -1,9 +1,8 @@
 
 <p align="center">
-  <img src="https://github.com/razannael/GRADUATION_PROJECT_I_AM_ALIVE_APP/blob/main/assets/i-am-alive.png" alt="I Am Alive" width="230"/>
 </p>
 
-"I Am Alive" is a mobile application designed to assist people during disasters. The idea for the app emerged during the war on Gaza, with the aim of helping people in emergencies by providing crucial information to rescue teams.
+
 
 ## Features
 
@@ -31,9 +30,7 @@
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
 
-- **Inspiration**: The app idea originated during the war on Gaza to help people in emergencies.
 
 ---
 
